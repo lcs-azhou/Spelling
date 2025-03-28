@@ -24,32 +24,51 @@ struct QuizView: View {
     // MARK: Computed properties
     var body: some View {
         
-        VStack {
-            Image(currentItem.imageName)
-                .resizable()
-                .scaledToFit()
-            
-            HStack{
-                //            Allow the user to input
-                TextField("Enter the name of the item", text: $userGuess)
+        HStack{
+            //left side of the interface
+            VStack {
+                Image(currentItem.imageName)
+                    .resizable()
+                    .scaledToFit()
                 
-                // Show Outcome (show the string attached to each case in the enumeration)
-                Text(currentOutcome.rawValue)
+                HStack{
+                    //            Allow the user to input
+                    TextField("Enter the name of the item", text: $userGuess)
+                    
+                    // Show Outcome (show the string attached to each case in the enumeration)
+                    Text(currentOutcome.rawValue)
+                }
+                
+                HStack {
+                    //       Make it possible to Check
+                    Button {
+                        checkGuess()
+                    } label: {
+                        Text("Submit")
+                    }
+                    //        Pick a new word
+                    Button {
+                        newWord()
+                    } label: {
+                        Text("newword")
+                    }
+                }
+                
             }
             
-            HStack {
-                //       Make it possible to Check
-                Button {
-                    checkGuess()
-                } label: {
-                    Text("Submit")
+            //right side
+            List(history){ currentResult in
+                
+                HStack{
+                    Image(currentResult.item.imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50)
+                    Text(currentResult.guessProvided)
+                    Spacer()
+                    Text(currentResult.outcome.rawValue)
                 }
-                //        Pick a new word
-                Button {
-                    newWord()
-                } label: {
-                    Text("newword")
-                }
+                
             }
             
         }
