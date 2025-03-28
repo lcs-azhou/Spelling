@@ -11,12 +11,15 @@ struct QuizView: View {
     
     // MARK: Stored properties
     @State var currentItem = itemsToSpell.randomElement()!
-
+    
     //    The user's guess
     @State var userGuess = ""
     
     //    The outcome
     @State var currentOutcome: Outcome = .undetermined
+    
+    //An array to store results of user's guessess
+    @State var history: [Result] = []//empty array
     
     // MARK: Computed properties
     var body: some View {
@@ -48,7 +51,7 @@ struct QuizView: View {
                     Text("newword")
                 }
             }
-
+            
         }
         
     }
@@ -66,6 +69,14 @@ struct QuizView: View {
     
     //    Pick a new word
     func newWord() {
+        
+        //add the current result to the history
+        history.insert(Result(item: currentItem, guessProvided: userGuess, outcome: currentOutcome), at: 0)
+        
+        //debug
+        print(history)
+        
+        //reset for a new question
         currentItem = itemsToSpell.randomElement()!
         userGuess = ""
         currentOutcome = .undetermined
