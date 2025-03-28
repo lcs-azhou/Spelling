@@ -57,7 +57,12 @@ struct QuizView: View {
             }
             
             //right side
-            List(history){ currentResult in
+            List(
+                filtering(
+                    originalList: history,
+                    ondesiredOutcome: .correct
+                )
+            ){ currentResult in
                 
                 HStack{
                     Image(currentResult.item.imageName)
